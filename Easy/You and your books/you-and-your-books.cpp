@@ -7,27 +7,42 @@ using namespace std;
 
 // } Driver Code Ends
 
-class Solution{
-    public:
-    /*You are requried to complete this method */
-int max_Books(int a[], int n, int k)
-{
-    int current_sum = 0;  // Current sum of consecutive stacks
-    int max_sum = 0;      // Maximum sum of consecutive stacks
 
-    for (int i = 0; i < n; i++) {
-        if (a[i] <= k) {
-            current_sum += a[i];
-            max_sum = max(max_sum, current_sum);
-        } else {
-            current_sum = 0; // Reset the current sum
+
+
+
+class Solution {
+public:
+    int max_Books(int a[], int n, int k) {
+        int dp[n] = {0}; // Initialize the dp array with zeros
+        int ans = -1;
+
+        if (a[0] <= k) {
+            dp[0] = a[0];
         }
+        
+        ans = dp[0]; // Update ans with dp[0]
+
+        for (int i = 1; i < n; i++) {
+            if (a[i] <= k) {
+                // If dp[i-1] is positive, it means we can extend the sequence.
+                if (dp[i - 1] > 0) {
+                    dp[i] = a[i] + dp[i - 1];
+                }
+                else {
+                    dp[i] = a[i]; // Otherwise, start a new sequence.
+                }
+            }
+            // Update ans with the maximum value between ans and dp[i].
+            ans = max(ans, dp[i]);
+        }
+
+        return ans;
     }
-
-    return max_sum;
-}
-
 };
+
+
+
 
 //{ Driver Code Starts.
 int main()
