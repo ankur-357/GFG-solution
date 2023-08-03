@@ -8,47 +8,53 @@ class Solution
 {
     public:
     //Function to find whether a path exists from the source to destination.
+    bool dfs(int i,int j,vector<vector<int>> &vis,vector<vector<int>>& grid){
+        
+        if(i<0 || i>=grid.size() || j<0 || j>=grid[0].size() || vis[i][j]==1 || grid[i][j]==0){
+            return false;
+        }
+       
+       
+       if(grid[i][j]==2){
+           return true;
+       }
+       
+       vis[i][j]=1;
+       
+       int dx[4]={-1,0,1,0};
+       int dy[4]={0,1,0,-1};
+       
+       for(int t=0;t<4;t++){
+           int nexti=i+dx[t];
+           int nextj=j+dy[t];
+           if(dfs(nexti,nextj,vis,grid)==true){
+               return true;
+           }
+       }
+       return false;
+       
+    }
     bool is_Possible(vector<vector<int>>& grid) 
     {
         //code here
- auto copy=grid;
-        int r=grid.size();
-        pair<int,int>source,destination;
-        int c=grid[0].size();
-        for(int i=0;i<r;i++){
-            for(int j=0;j<c;j++){
-                if(copy[i][j]==1){
-                    source={i,j};
-                }
-                if(copy[i][j]==2){
-                    destination={i,j};
-                }
-                if(copy[i][j]!=0){
-                    copy[i][j]=1;
-                }
-            }
-        }
-        int dx[4]={0,0,-1,1};
-        int dy[4]={-1,1,0,0};
-        queue<pair<int,int>>q;
-        q.push(source);
-        while(!q.empty()){
-            auto temp=q.front();
-            
-            q.pop();
-            if(temp==destination){
-                return true;
-            }
-            for(int i=0;i<4;i++){
-                int x=temp.first+dx[i];
-                int y=temp.second+dy[i];
-                if(x>=0&&x<r&&y>=0&&y<c&&copy[x][y]==1){
-                    q.push({x,y});
-                    copy[x][y]=0;
+        /* 
+        1->source
+        2->destination
+        3->blank
+        0->wall
+        */
+        int row=grid.size(),col=grid[0].size();
+        
+        vector<vector<int>> vis(row,vector<int>(col,0));
+        for(int i=0;i<row;i++){
+            for(int j=0;j<col;j++){
+                if(grid[i][j]==1){
+                    return dfs(i,j,vis,grid);
                 }
             }
         }
-        return false;
+        
+           
     }
 };
 
