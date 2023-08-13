@@ -116,20 +116,25 @@ struct Node
     Node* right;
 }; */
 
-void inorder(struct Node *root, vector<int> &ans, int k){
-    if(root!=NULL){
-        inorder(root->left, ans, k-1);
-        if(k==0){
-            ans.push_back(root->data);
-        }
-        inorder(root->right, ans, k-1);
-        
-    }
-}
-
 vector<int> Kdistance(struct Node *root, int k)
-{
-    vector<int> ans;
-    inorder(root, ans, k);
-    return ans;
+{   
+    queue<Node*> q;
+    q.push(root);
+    int lvl=-1;
+    while(q.empty()==false)
+    {
+        int sz=q.size();
+        lvl++;
+        vector<int> temp;
+        for(int i=0;i<sz;i++)
+        {
+            Node* x=q.front();
+            q.pop();
+            if(x->left!=NULL) q.push(x->left);
+            if(x->right!=NULL) q.push(x->right);
+            temp.push_back(x->data);
+        }
+        if(lvl==k) return temp;
+    }
+    return {};
 }
