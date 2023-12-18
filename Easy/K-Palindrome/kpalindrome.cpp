@@ -1,48 +1,61 @@
 //{ Driver Code Starts
+// Initial Template for C++
+
 #include <bits/stdc++.h>
 using namespace std;
 
+// } Driver Code Ends
+// User function Template for C++
 
-bool is_k_palin(string s,int k);
+class Solution{
+public:
+// Function to find the length of the Longest Common Subsequence (LCS)
+int lcs(string s1, string s2) {
+    int n = s1.size();
+    int m = s2.size();
 
-int main() {
-	// your code goes here
-	int t;
-	cin>>t;
-	while(t--)
-	{
-		string s ;
-		cin>>s;
-		int k;
-		cin>>k;
-		
-		cout<<is_k_palin(s,k)<<endl;
-	}
-	return 0;
+    // Initialize two vectors to store the current and previous rows of the DP table
+    vector<int> prev(m + 1, 0), cur(m + 1, 0);
+
+    // Base case is covered as we have initialized the prev and cur vectors to 0.
+
+    for (int ind1 = 1; ind1 <= n; ind1++) {
+        for (int ind2 = 1; ind2 <= m; ind2++) {
+            if (s1[ind1 - 1] == s2[ind2 - 1])
+                cur[ind2] = 1 + prev[ind2 - 1]; // Characters match, increment LCS length
+            else
+                cur[ind2] = max(prev[ind2], cur[ind2 - 1]); // Characters don't match, consider the maximum from above or left
+        }
+        prev = cur; // Update the previous row with the current row
+    }
+
+    return prev[m]; // Return the length of the Longest Common Subsequence
+}
+    int kPalindrome(string s, int n, int k)
+    {
+        // code here
+    string rev =s;
+    reverse(rev.begin(),rev.end());
+    int l = lcs(s,rev);
+    // If the difference between string length and LCS length is less than or equal to k, return true
+    return ((n-l)<=k);
+    }
+};
+
+//{ Driver Code Starts.
+
+int main(){
+    int t;
+    cin>>t;
+    while(t--){
+        int n, k;
+        cin>>n>>k;
+        string str;
+        cin>>str;
+        
+        Solution ob;
+        cout<<ob.kPalindrome(str, n, k)<<endl;
+    }
+    return 0;
 }
 // } Driver Code Ends
-
-
-int solve(int i,int j,string s,vector<vector<int>>& dp)
-  {
-      if(i>=j) return 0;
-      
-      if(dp[i][j]!=-1) return dp[i][j];
-      
-      if(s[i]==s[j]) {
-          return dp[i][j] = solve(i+1,j-1,s,dp);
-      }
-      
-      int i1 = solve(i+1,j,s,dp)+1;
-      int i2 = solve(i,j-1,s,dp)+1;
-      
-      return dp[i][j] = min(i1,i2);
-  }
-bool is_k_palin(string S,int k)
-{
-     vector<vector<int>> dp(S.size(),vector<int>(S.size(),-1));
-        int x = solve(0,S.size()-1,S,dp);
-        return x<=k?1:0;
-}
-
- 
