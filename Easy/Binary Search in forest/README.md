@@ -1,0 +1,21 @@
+<h2><a href="https://www.geeksforgeeks.org/problems/binary-search-in-forest--141631/1?page=1&category=Binary%20Search&sortBy=difficulty">Binary Search in forest</a></h2><h3>Difficulty Level : Easy</h3><hr><div class="problems_problem_content__Xm_eO"><p><span style="font-size: 18px;"><span id="speechify-first-word-listening-nudge-root-1" style="position: absolute; z-index: 10000;"></span><span id="speechify-first-word-listening-nudge-1" style="opacity: 1;">There are n</span> trees in a forest. The heights of the trees is stored in array <strong>tree[],&nbsp;</strong>where <strong>tree[i]</strong>&nbsp;denotes the height of the&nbsp;<strong>i<sup>th</sup></strong>&nbsp;tree in the&nbsp;forest</span><span style="font-size: 18px;">. If the&nbsp;<strong>i<sup>th</sup></strong>&nbsp;tree is cut at a height <strong>H</strong>, then the&nbsp;wood collected is <strong>tree[i] - H</strong>, provided&nbsp;<strong>tree[i] &gt; H</strong>. If the total woods that needs to be collected is exactly equal to&nbsp;<strong>k</strong>,&nbsp;find the height&nbsp;<strong>H</strong> at which every tree should be cut (all trees have to be cut at the same height).&nbsp;If it is not possible then return&nbsp;<strong>-1</strong>&nbsp;else return <strong>H</strong>.</span></p>
+<p><span style="font-size: 18px;"><strong><span id="speechify-first-word-listening-nudge-root-2" style="position: absolute; z-index: 10000;"></span><span id="speechify-first-word-listening-nudge-2" style="opacity: 1;">Example 1:</span></strong></span></p>
+<pre><span style="font-size: 18px;"><strong>Input:
+</strong>n = 5, k = 4
+tree[] = {2, 3, 6, 2, 4}
+<strong>Output: </strong>3<strong>
+Explanation: </strong>Wood collected by cutting trees
+at height 3 = 0 + 0 + (6-3) + 0 + (4-3) = 4
+hence 3 is to be subtracted from all numbers.
+Since 2 is lesser than 3, nothing gets
+subtracted from it.</span></pre>
+<p><span style="font-size: 18px;"><strong><span id="speechify-first-word-listening-nudge-root-3" style="position: absolute; z-index: 10000;"></span><span id="speechify-first-word-listening-nudge-3" style="opacity: 1;"><span id="speechify-first-word-listening-nudge-root-4" style="position: absolute; z-index: 10000;"></span><span id="speechify-first-word-listening-nudge-4" style="opacity: 1;">Example 2:</span></span></strong></span></p>
+<pre><span style="font-size: 18px;"><strong>Input:
+</strong>n = 6, k = 8
+tree[] = {1, 7, 6, 3, 4, 7}
+<strong>Output: </strong>4
+<strong>Explanation: </strong>Wood collected by cutting trees
+at height 4 = 0+(7-4)+(6-4)+0+0+(7-4) = 8</span></pre>
+<p><span style="font-size: 18px;"><strong><span id="speechify-first-word-listening-nudge-root-5" style="position: absolute; z-index: 10000;"></span><span id="speechify-first-word-listening-nudge-5" style="opacity: 1;"><span id="speechify-first-word-listening-nudge-root-6" style="position: absolute; z-index: 10000;"></span><span id="speechify-first-word-listening-nudge-6" style="opacity: 1;">Your Task:</span></span></strong><br>Your task is to complete the function <strong>find_height()</strong>. This function takes the array <strong>tree[ ]</strong>, and the integers <strong>n</strong> and <strong>k</strong> as input parameters and returns the height at which trees have to be cut. If no positive integer value of height is possible, return <strong>-1</strong>.</span></p>
+<p><br><span style="font-size: 18px;"><strong><span id="speechify-first-word-listening-nudge-root-7" style="position: absolute; z-index: 10000;"></span><span id="speechify-first-word-listening-nudge-7" style="opacity: 1;">Expected Time Complexity:</span></strong> O(n&nbsp;log h)<br><strong>Expected Auxiliary Space:</strong> O(1)</span></p>
+<p><br><span style="font-size: 18px;"><strong><span id="speechify-first-word-listening-nudge-root-8" style="position: absolute; z-index: 10000;"></span><span id="speechify-first-word-listening-nudge-8" style="opacity: 1;">Constraints:&nbsp;</span></strong><br>1 &lt;= n &lt;= 10<sup>4</sup><br>1 &lt;= tree[i] &lt;= 10<sup>3</sup><br>1 &lt;= k &lt;= 10<sup>7</sup></span></p></div><p><span style=font-size:18px><strong>Company Tags : </strong><br><code>Goldman Sachs</code>&nbsp;<br><p><span style=font-size:18px><strong>Topic Tags : </strong><br><code>Arrays</code>&nbsp;<code>Binary Search</code>&nbsp;<code>Data Structures</code>&nbsp;<code>Algorithms</code>&nbsp;
