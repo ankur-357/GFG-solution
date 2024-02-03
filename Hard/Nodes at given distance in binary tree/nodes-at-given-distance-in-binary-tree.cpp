@@ -94,83 +94,92 @@ struct Node
     struct Node *left, *right;
 };
 */
-
-class Solution
-{
-private:
-
+class Solution {
 public:
+    unordered_map<Node*, Node*> parent;
 
-unordered_map<Node*,Node*> parent;
-    
-    void parentNode(Node* curr,Node* par){
-        if(curr==NULL){
+    void addParent(Node* root) {
+        if (!root)
             return;
-        }
-        parent[curr]=par;
-        parentNode(curr->left,curr);
-        parentNode(curr->right,curr);
+
+        if (root->left)
+            parent[root->left] = root;
+
+        addParent(root->left);
+
+        if (root->right)
+            parent[root->right] = root;
+
+        addParent(root->right);
     }
-    
-    Node* getTargetNode(Node*root,int target){
-        if(root==NULL){
-            return NULL;
+
+    void collectKDistanceNodes(Node* target, int k, vector<int>& result) {
+        if (!target)
+            return;
+
+        queue<Node*> que;
+        que.push(target);
+        unordered_set<int> visited;
+        visited.insert(target->data);
+
+        while (!que.empty()) {
+            int n = que.size();
+            if (k == 0)
+                break;
+
+            while (n--) {
+                Node* curr = que.front();
+                que.pop();
+
+                if (curr->left && !visited.count(curr->left->data)) {
+                    que.push(curr->left);
+                    visited.insert(curr->left->data);
+                }
+                if (curr->right && !visited.count(curr->right->data)) {
+                    que.push(curr->right);
+                    visited.insert(curr->right->data);
+                }
+
+                if (parent.count(curr) && !visited.count(parent[curr]->data)) {
+                    que.push(parent[curr]);
+                    visited.insert(parent[curr]->data);
+                }
+            }
+            k--;
         }
-        if(root->data==target){
+
+        while (!que.empty()) {
+            Node* temp = que.front();
+            que.pop();
+            result.push_back(temp->data);
+        }
+    }
+
+    vector<int> KDistanceNodes(Node* root, int target, int k) {
+        vector<int> result;
+
+        addParent(root);
+
+        collectKDistanceNodes(findNode(root, target), k, result);
+        sort(result.begin(), result.end());
+        return result;
+    }
+
+    Node* findNode(Node* root, int target) {
+        if (!root)
+            return nullptr;
+        if (root->data == target)
             return root;
-        }
-        Node* left_res = getTargetNode(root->left, target);
-        Node* right_res = getTargetNode(root->right, target);
-    
-        if(left_res) return left_res;
-        else return right_res;
+
+        Node* left = findNode(root->left, target);
+        Node* right = findNode(root->right, target);
+
+        return left ? left : right;
     }
-
-
-
-    vector <int> KDistanceNodes(Node* root, int target , int k)
-    {
-        // return the sorted vector of all nodes at k dist
-        vector<int> ans;
-        if(root==NULL){
-            return ans;
-        }
-        parentNode(root,NULL);
-        Node* targetNode = getTargetNode(root,target);
-        
-        queue<Node*> q;
-        q.push(targetNode);
-        unordered_set<Node*> visited;
-        
-        while(!q.empty() && k>0){
-          k--;
-          int size = q.size();
-          for(int i=0;i<size;i++){
-                Node* temp = q.front();
-                q.pop();
-                visited.insert(temp);
-                
-                if(!visited.count(temp->left) && temp->left){
-                    q.push(temp->left);
-                }
-                if(!visited.count(temp->right) && temp->right){
-                    q.push(temp->right);
-                }
-                if(!visited.count(parent[temp]) && parent[temp]){
-                    q.push(parent[temp]);
-                }
-          }
-        }
-        
-        while(!q.empty()){
-            Node* curr = q.front();
-            q.pop();
-            ans.push_back(curr->data);
-        }
-        sort(ans.begin(),ans.end());
-        return ans;
-    } 
 };
+
+
+
 
 //{ Driver Code Starts.
 
