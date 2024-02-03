@@ -90,63 +90,34 @@ struct Node
         left = right = NULL;
     }
 }; */
+class Solution{
+    public:
+pair<int,int> diameterFast(Node* root) {
+        //base case
+        if(root == NULL) {
+            pair<int,int> p = make_pair(0,0);
+            return p;
+        }
+        
+        pair<int,int> left = diameterFast(root->left);
+        pair<int,int> right = diameterFast(root->right);
+        
+        int op1 = left.first;
+        int op2 = right.first;
+        int op3 = left.second + right.second + 1;
+        
+        pair<int,int> ans;
+        ans.first = max(op1, max(op2, op3));;
+        ans.second = max(left.second , right.second) + 1;
 
-class Solution {
-    // Function to return the diameter of a Binary Tree.
-    /* <-------------------------------------Method 1----------------------------->
-    int diameter(Node root) {
-        // Your code here
-        int res=0;
-        if(root==null)
-        {
-            return 0;
-        }
-        int lh=height(root.left);
-        int rh=height(root.right);
-        int ld= diameter(root.left);
-        int rd= diameter(root.right);
-        res=Math.max(lh+rh+1,Math.max(ld,rd));
-        return res;
+        return ans;
     }
-    int height(Node root)
-    {
-        if(root==null)
-        {
-            return 0;
-        }
-        int lh=height(root.left);
-        int rh=height(root.right);
-        if(lh>rh)
-        {
-            return lh+1;
-        }
-        else
-        {
-            return rh+1;
-        }
-    }*/
+    int diameter(Node* root) {
     
-    /*<---------------------------------Method 2 --------------------------->*/
-    
-    int d = 0;
-    int diameter(Node root) 
-    {
-        height(root);
-        return d;
+        return diameterFast(root).first;
+        
     }
-    int height(Node root) 
-    {
-        if (root == null) 
-        {
-            return 0;
-        }
-        int lh = height(root.left);
-        int rh = height(root.right);
-        d = Math.max(d, 1 + lh + rh);
-        return 1 + Math.max(lh, rh);
-    }
-}
-
+};
 
 //{ Driver Code Starts.
 
