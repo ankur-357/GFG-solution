@@ -101,6 +101,8 @@ int main()
 // } Driver Code Ends
 
 
+
+
 //User function Template for C++
 /*
 Structure of the node of the binary tree is as
@@ -111,34 +113,34 @@ struct Node
 };
 */
 // your task is to complete this function
-bool solve(Node* root,int &cnt,int &node,int &val){
-    if(root==NULL) return 0;
+void solve(Node* root,int &node,bool &found,vector<int>&values){
+    if(root==NULL) return;
     
     if(root->data==node){
-        return 1;
+        found=1;
+        return;
     }
-    int l=solve(root->left,cnt,node,val);
-   
-    int r=solve(root->right,cnt,node,val);
+    solve(root->left,node,found,values);
     
-    if(l||r){
-        cnt--;
-        if(cnt==0) val=root->data;
-        
-        return 1;
+    if(found){
+        values.push_back(root->data);
+        return;
     }
-    
-    return 0;
    
+    solve(root->right,node,found,values);
+    
+    if(found){
+        values.push_back(root->data);
+    }
+
 }
 
 int kthAncestor(Node *root, int k, int node)
 {
+    bool found=0;
+    vector<int>values;
+    solve(root,node,found,values);
     
-    int cnt=k;
-    int val=-1;
-    
-    solve(root,cnt,node,val);
-    
-    return val;
+    return values.size()<k?-1:values[k-1];
 }
+
