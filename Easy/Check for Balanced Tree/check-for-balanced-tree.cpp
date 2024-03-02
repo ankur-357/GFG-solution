@@ -102,39 +102,23 @@ struct Node
  */
 
 class Solution{
-    
-    private: 
-    int height(struct Node* node){
-        if(node==NULL){
-            return 0;
-        }
-        int left=height(node->left);
-        int right=height(node->right);
-        int ans=max(left,right)+1;
-       
-        return ans;
-    }
     public:
-    bool isBalanced(Node* root)
+    int height(Node* root) {
+        if(root == NULL)
+            return 0;
+        return max(height(root -> right), height(root -> left)) + 1;
+    }
+    bool isBalanced(Node *root)
     {
-      //base case
-      if(root==NULL){
-          return false;
-      }
-      
-      bool left=isBalanced(root->left);
-      bool right=isBalanced(root->right);
-      
-      bool diff=abs (height(root->left)-height(root->right)) <=1;
-      
-      if(left && right && diff){
-          return 1;
-      }
-      else{
-          return false;
-      }
+        if(root == NULL)
+            return true;
+        if(abs(height(root -> right) - height(root -> left))> 1){
+            return false;
+        }
+        return isBalanced(root -> right) && isBalanced(root -> left);
     }
 };
+
 
 
 //{ Driver Code Starts.
